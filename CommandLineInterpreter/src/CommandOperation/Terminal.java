@@ -18,4 +18,13 @@ public class Terminal {
         System.out.println( path.toAbsolutePath().toString());
     }
 
+   public void listFiles() {
+        //  list files and directories in the current directory.(ls)
+        File currentDirectory = new File(System.getProperty("user.dir"));
+        File[] files = currentDirectory.listFiles();
+        for (File file : files) {
+            System.out.println(file.getName());
+        }
+    }
+
 }
