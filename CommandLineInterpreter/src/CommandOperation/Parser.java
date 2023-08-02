@@ -9,7 +9,9 @@ public class Parser {
             t.clear();
         } else if (command.equals("pwd")) {
             t.currentPath();
-        }
+        }else if (command.equals("ls")){
+            t.listFiles();
+        } 
 
     }
 }
