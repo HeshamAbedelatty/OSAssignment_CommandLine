@@ -9,6 +9,8 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
+            
+            System.out.print(x.currentPath()+" >");
             String userInput = scanner.nextLine();
 
             if (userInput.equals("exit")) {
