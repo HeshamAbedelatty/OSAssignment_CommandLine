@@ -10,12 +10,13 @@ public class Terminal {
             System.out.println("");
         }
     }
-    public void currentPath() {
+   public String currentPath() {
     /////prints the current path.(pwd)
         String currentPath = System.getProperty("user.dir");
 
         // Convert the Path to a string representation of the current path
-        System.out.println( currentPath);
+        return currentPath;
+
     }
 
    public void listFiles() {
