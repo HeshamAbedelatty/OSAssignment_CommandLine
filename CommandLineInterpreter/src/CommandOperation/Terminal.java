@@ -62,5 +62,10 @@ public class Terminal {
         // Verify the current working directory has been changed
         //System.out.println( System.getProperty("user.dir"));
     }
+   public void cd2(String newpath){
+        //set the new directory as the current working directory
+        System.setProperty("user.dir", newpath);
+        
+    }
 
 }
