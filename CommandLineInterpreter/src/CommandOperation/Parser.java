@@ -24,7 +24,7 @@ public class Parser {
             }
             else
             {
-                t.currentPath();
+               System.out.println(t.currentPath());
             }
         }
         else if(command.equals("cd"))
