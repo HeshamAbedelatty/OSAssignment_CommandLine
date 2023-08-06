@@ -12,10 +12,10 @@ public class Terminal {
     }
     public void currentPath() {
     /////prints the current path.(pwd)
-        java.nio.file.Path path = Paths.get("");
+        String currentPath = System.getProperty("user.dir");
 
         // Convert the Path to a string representation of the current path
-        System.out.println( path.toAbsolutePath().toString());
+        System.out.println( currentPath);
     }
 
    public void listFiles() {
@@ -51,6 +51,16 @@ public class Terminal {
             System.err.println("Error occurred while copying the file: " + e.getMessage());
         }
 
+    }
+    public void cd1(){
+        // Get the user's home directory
+        String userHome = System.getProperty("user.home");
+
+        // Set the user's home directory as the current working directory
+        System.setProperty("user.dir", userHome);
+
+        // Verify the current working directory has been changed
+        //System.out.println( System.getProperty("user.dir"));
     }
 
 }
