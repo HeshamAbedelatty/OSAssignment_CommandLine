@@ -1,17 +1,54 @@
 package CommandOperation;
 
 public class Parser {
-   public static void parse(String userInput) {
-        String[] tokens = userInput.split("\\s+");
-        String command = tokens[0];
+    public static void parse(String userInput) {
+        String[] arg = userInput.split("\\s+");
+        String command = arg[0];
         Terminal t = new Terminal();
-        if (command.equals("clear")) {
-            t.clear();
-        } else if (command.equals("pwd")) {
-            t.currentPath();
-        }else if (command.equals("ls")){
-            t.listFiles();
-        } 
+        if (command.equals("clear"))
+        {
+            if(arg.length != 1)
+            {
+                System.out.println ("Error ! ,'clear' takes no arguments");
+            }
+            else
+            {
+                t.clear();
+            }
+        }
+        else if (command.equals("pwd"))
+        {
+            if(arg.length != 1)
+            {
+                System.out.println ("Error ! ,'pwd' takes no arguments");
+            }
+            else
+            {
+                t.currentPath();
+            }
+        }
+        else if (command.equals("ls"))
+        {
+            if(arg.length != 1)
+            {
+                System.out.println ("Error ! ,'ls' takes no arguments");
+            }
+            else
+            {
+                t.listFiles();
+            }
+        }
+        else if (command.equals("cp")){
+            if (arg.length==3)
+            {
+                t.copycontent(arg[1], arg[2]);
+            }
+            else
+            {
+                System.out.println ("Error! ,cp Two arguments expected.");
+            }
+        }
 
     }
 }
+
