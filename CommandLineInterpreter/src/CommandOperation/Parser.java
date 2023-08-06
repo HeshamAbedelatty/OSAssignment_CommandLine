@@ -27,6 +27,18 @@ public class Parser {
                 t.currentPath();
             }
         }
+        else if(command.equals("cd"))
+        {
+            if (arg.length==1){
+                t.cd1();
+            }
+            else if(arg.length==2){
+                t.cd2(arg[1]);
+            }
+            else{
+                System.out.println("Error! ,'cd' takes one or no arguments");
+            }
+        }
         else if (command.equals("ls"))
         {
             if(arg.length != 1)
@@ -48,6 +60,7 @@ public class Parser {
                 System.out.println ("Error! ,cp Two arguments expected.");
             }
         }
+
 
     }
 }
