@@ -24,7 +24,7 @@ public class Parser {
             }
             else
             {
-               System.out.println(t.currentPath());
+               System.out.println(Terminal.currentPath());
             }
         }
         else if(command.equals("cd"))
@@ -59,8 +59,20 @@ public class Parser {
             {
                 System.out.println ("Error! ,cp Two arguments expected.");
             }
+        } else if (command.equals("help")) {
+            if (arg.length > 1) {
+                System.out.println("no arguments should be added");
+            }
+            else
+                t.help();
+        } else if (command.equals("date")) {
+            if (arg.length > 1)
+                System.out.println("no arguments should be added");
+            else
+                t.date();
+        } else if (command.equals("rm")) {
+            t.rm(arg);
         }
-
 
     }
 }

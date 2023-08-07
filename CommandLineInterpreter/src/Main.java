@@ -10,7 +10,7 @@ public class Main {
 
         while (true) {
             
-            System.out.print(x.currentPath()+" >");
+            System.out.print(Terminal.currentPath()+" >");
             String userInput = scanner.nextLine();
 
             if (userInput.equals("exit")) {

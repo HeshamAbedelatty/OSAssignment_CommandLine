@@ -1,5 +1,11 @@
 package CommandOperation;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Terminal {
    public void clear() {
@@ -10,7 +16,7 @@ public class Terminal {
             System.out.println("");
         }
     }
-   public String currentPath() {
+   public static String currentPath() {
     /////prints the current path.(pwd)
         String currentPath = System.getProperty("user.dir");
 
@@ -68,5 +74,43 @@ public class Terminal {
         System.setProperty("user.dir", newpath);
         
     }
+    public void help() {
+        System.out.println("pwd : Current work directory\n"
+                + "date : Current date/time\n"
+                + "exit : Stop all\n"
+                + "rm: Takes 1 argument which is a file name that exists in the current" +
+                "directory and removes this file.\n"
+                + "cat : Takes 1 argument and prints the file’s content or takes 2 arguments" +
+                "and concatenates the content of the 2 files and prints it.\n"
+                + "ls: Takes no arguments and lists the contents of the current directory" +
+                "sorted alphabetically."
+                + "cp: Takes 2 arguments, both are files and copies the first onto the\n" +
+                "second."
+                + "mkdir: Takes 1 or more arguments and creates a directory for each\n" +
+                "argument"
+                + "rmdir: remove empty directories\n"
+                + ""
+                + ""
+                + ""
+                + "");
 
+
+    }
+    public void date() {
+
+        LocalDateTime now = LocalDateTime.now();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String currentTime = now.format(formatter);
+
+        System.out.println(currentTime);
+    }
+    public void rm(String[] args) {
+        for (String arg : args) {
+            File file = new File(currentPath(), arg);
+            if (file.exists() && file.isFile()) {
+                file.delete();
+            }
+        }
+    }
 }
