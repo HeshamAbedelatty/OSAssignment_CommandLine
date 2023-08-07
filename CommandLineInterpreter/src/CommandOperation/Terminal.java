@@ -1,13 +1,12 @@
 package CommandOperation;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Scanner;
 
 public class Terminal {
    public void clear() {
@@ -142,6 +141,18 @@ public class Terminal {
             }
         }
     }
+    public void more(String text)
+    {
+            File file = new File(currentPath(), text);
+            try {
+                List<String> lines = Files.readAllLines(file.toPath());
+                for (String line : lines) {
+                    System.out.println(line);
+                }
+            } catch (IOException e) {
+                System.out.println("Error reading file: " + e.getMessage());
+            }
+    }
     public void cat(String[] args) {
         if (args.length == 1) {
             File file = new File(currentPath(), args[0]);
@@ -171,6 +182,42 @@ public class Terminal {
             }
         } else {
             System.out.println("Error: cat command takes 1 or 2 arguments.");
+        }
+    }
+    public void D_reidrect(String text,String filename) throws IOException {
+
+        File file = new File(currentPath(), filename);
+        String p = "";
+        if (file.exists() && file.isFile()) {
+            try {
+                Path path = Paths.get(currentPath()+"/"+filename);
+                Scanner scanner = new Scanner(path);
+
+                while (scanner.hasNextLine()) {
+                    String line = scanner.nextLine();
+                    p = line.concat(line);
+                }
+
+                scanner.close();
+            } catch (IOException e) {
+                System.err.println("Error reading the file: " + e.getMessage());
+            }
+            p = p.concat(text);
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(currentPath()+"/"+filename))) {
+
+                writer.write(p);
+            } catch (IOException e) {
+                System.err.println("Error writing to the file: " + e.getMessage());
+            }
+        }
+        else {
+            File newDir = new File(currentPath(), filename);
+            newDir.mkdirs();
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(currentPath()+"/"+filename))) {
+                writer.write(text);
+            } catch (IOException e) {
+                System.err.println("Error writing to the file: " + e.getMessage());
+            }
         }
     }
 
