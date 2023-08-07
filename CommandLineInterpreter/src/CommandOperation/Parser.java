@@ -71,9 +71,44 @@ public class Parser {
             else
                 t.date();
         } else if (command.equals("rm")) {
-            t.rm(arg);
+            if (arg.length == 1)
+                System.out.println("you should add arguments ");
+            else {
+                String[] subArray = getSubArray(arg, 1, arg.length-1);
+                t.rm(subArray);
+            }
+        } else if (command.equals("mkdir")) {
+            if (arg.length == 1)
+                System.out.println("you should add arguments ");
+            else {
+            String[] subArray = getSubArray(arg, 1, arg.length-1);
+            t.mkdir(subArray);
+            }
+        } else if (command.equals("rmdir")) {
+            if (arg.length == 1)
+                return;
+            String[] subArray = getSubArray(arg, 1, arg.length-1);
+            t.rmdir(subArray);
+
+        } else if (command.equals("cat")) {
+            if (arg.length == 1)
+                System.out.println("you should add arguments ");
+            else {
+                String[] subArray = getSubArray(arg, 1, arg.length-1);
+                t.cat(subArray);
+            }
         }
 
+    }
+    public static String[] getSubArray(String [] array, int startIndex, int endIndex) {
+        int subArrayLength = endIndex - startIndex + 1;
+        String [] subArray = new String[subArrayLength];
+
+        for (int i = startIndex; i <= endIndex; i++) {
+            subArray[i - startIndex] = array[i];
+        }
+
+        return subArray;
     }
 }
 

@@ -3,9 +3,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 public class Terminal {
    public void clear() {
@@ -113,4 +115,63 @@ public class Terminal {
             }
         }
     }
+    public void mkdir(String[] args) {
+        for (String arg : args) {
+            File newDir = new File(currentPath(), arg);
+            if (!newDir.exists()) {
+                newDir.mkdirs();
+            }
+        }
+    }
+    public void rmdir(String[] args) {
+        if (args[0].equals("*")) {
+            File[] subDirs = new File(currentPath()).listFiles(File::isDirectory);
+            if (subDirs != null) {
+                for (File dir : subDirs) {
+                    if (dir.listFiles().length == 0) {
+                        dir.delete();
+                    }
+                }
+            }
+        } else {
+            File dir = new File(currentPath(), args[0]);
+            if (dir.isDirectory() && dir.listFiles().length == 0) {
+                dir.delete();
+            } else {
+                System.out.println("Error: Directory is not empty.");
+            }
+        }
+    }
+    public void cat(String[] args) {
+        if (args.length == 1) {
+            File file = new File(currentPath(), args[0]);
+            try {
+                List<String> lines = Files.readAllLines(file.toPath());
+                for (String line : lines) {
+                    System.out.println(line);
+                }
+            } catch (IOException e) {
+                System.out.println("Error reading file: " + e.getMessage());
+            }
+        }
+        else if (args.length == 2) {
+            File file1 = new File(currentPath(), args[0]);
+            File file2 = new File(currentPath(), args[1]);
+            try {
+                List<String> lines1 = Files.readAllLines(file1.toPath());
+                List<String> lines2 = Files.readAllLines(file2.toPath());
+                for (String line : lines1) {
+                    System.out.println(line);
+                }
+                for (String line : lines2) {
+                    System.out.println(line);
+                }
+            } catch (IOException e) {
+                System.out.println("Error reading file: " + e.getMessage());
+            }
+        } else {
+            System.out.println("Error: cat command takes 1 or 2 arguments.");
+        }
+    }
+
 }
