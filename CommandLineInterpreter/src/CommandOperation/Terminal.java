@@ -143,11 +143,18 @@ public class Terminal {
     }
     public void more(String text)
     {
+            Scanner scanner = new Scanner(System.in);
             File file = new File(currentPath(), text);
             try {
                 List<String> lines = Files.readAllLines(file.toPath());
-                for (String line : lines) {
-                    System.out.println(line);
+                for (int i = 0; i < lines.size(); i++) {
+                    if(i>=10){
+                        System.out.println("More "+(lines.size()-1));
+                        scanner.nextLine();
+                        System.out.println(lines.get(i));
+                    }
+                    else
+                        System.out.println(lines.get(i));
                 }
             } catch (IOException e) {
                 System.out.println("Error reading file: " + e.getMessage());
