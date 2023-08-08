@@ -3,8 +3,10 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -26,13 +28,22 @@ public class Terminal {
 
     }
 
-   public void listFiles() {
+   public String listFiles() {
         //  list files and directories in the current directory.(ls)
         File currentDirectory = new File(System.getProperty("user.dir"));
         File[] files = currentDirectory.listFiles();
+        int i = 0;
+        String out = "";
+        List<String > list = new ArrayList<>() ;
         for (File file : files) {
-            System.out.println(file.getName());
+            list.add(file.getName());
+            i++;
         }
+       for (String s : list) {
+          out = out.concat(s);
+          out = out.concat("  ");
+       }
+       return out;
     }
 
    public void copycontent(String source, String destination) {
@@ -75,8 +86,8 @@ public class Terminal {
         System.setProperty("user.dir", newpath);
         
     }
-    public void help() {
-        System.out.println("pwd : Current work directory\n"
+    public String help() {
+        return "pwd : Current work directory\n"
                 + "date : Current date/time\n"
                 + "exit : Stop all\n"
                 + "rm: Takes 1 argument which is a file name that exists in the current" +
@@ -93,18 +104,18 @@ public class Terminal {
                 + ""
                 + ""
                 + ""
-                + "");
+                + "";
 
 
     }
-    public void date() {
+    public String  date() {
 
         LocalDateTime now = LocalDateTime.now();
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String currentTime = now.format(formatter);
 
-        System.out.println(currentTime);
+        return currentTime;
     }
     public void rm(String[] args) {
         for (String arg : args) {
@@ -141,14 +152,14 @@ public class Terminal {
             }
         }
     }
-    public void more(String text)
+    public List<String> more(String text)
     {
             Scanner scanner = new Scanner(System.in);
             File file = new File(currentPath(), text);
             try {
                 List<String> lines = Files.readAllLines(file.toPath());
                 for (int i = 0; i < lines.size(); i++) {
-                    if(i>=10){
+                    if(i>10){
                         System.out.println("More "+(lines.size()-1));
                         scanner.nextLine();
                         System.out.println(lines.get(i));
@@ -156,11 +167,14 @@ public class Terminal {
                     else
                         System.out.println(lines.get(i));
                 }
+                return lines;
             } catch (IOException e) {
                 System.out.println("Error reading file: " + e.getMessage());
             }
+            List<String>lines = null;
+            return lines;
     }
-    public void cat(String[] args) {
+    public List<String > cat(String[] args) {
         if (args.length == 1) {
             File file = new File(currentPath(), args[0]);
             try {
@@ -168,6 +182,7 @@ public class Terminal {
                 for (String line : lines) {
                     System.out.println(line);
                 }
+                return lines;
             } catch (IOException e) {
                 System.out.println("Error reading file: " + e.getMessage());
             }
@@ -184,12 +199,16 @@ public class Terminal {
                 for (String line : lines2) {
                     System.out.println(line);
                 }
+                lines1.addAll(lines2);
+                return lines1;
             } catch (IOException e) {
                 System.out.println("Error reading file: " + e.getMessage());
             }
         } else {
             System.out.println("Error: cat command takes 1 or 2 arguments.");
         }
+        List<String > line = null;
+        return line;
     }
     public void D_reidrect(String text,String filename) throws IOException {
 
@@ -312,6 +331,25 @@ public class Terminal {
             }
         }
     }
+    public void mv(String[] args) {
+        if (args.length != 2) {
+            System.out.println("Usage: java MVCommand <source_file> <destination_file>");
+            return;
+        }
 
+        String sourceFile = args[0];
+        String destinationFile = args[1];
+
+        try {
+            Path sourcePath = Path.of(sourceFile);
+            Path destinationPath = Path.of(destinationFile);
+
+            Files.move(sourcePath, destinationPath, StandardCopyOption.REPLACE_EXISTING);
+
+            System.out.println("File moved successfully.");
+        } catch (IOException e) {
+            System.out.println("An error occurred: " + e.getMessage());
+        }
+    }
 
 }
