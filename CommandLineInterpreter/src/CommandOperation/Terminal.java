@@ -159,10 +159,10 @@ public class Terminal {
             try {
                 List<String> lines = Files.readAllLines(file.toPath());
                 for (int i = 0; i < lines.size(); i++) {
-                    if(i>10){
-                        System.out.println("More "+(lines.size()-1));
+                    if(i>=10){
+                        System.out.println("More "+(lines.size()-i));
                         scanner.nextLine();
-                        System.out.println(lines.get(i));
+                        System.out.print(lines.get(i));
                     }
                     else
                         System.out.println(lines.get(i));
@@ -221,7 +221,7 @@ public class Terminal {
 
                 while (scanner.hasNextLine()) {
                     String line = scanner.nextLine();
-                    p = line.concat(line);
+                    p = p.concat(line);
                 }
 
                 scanner.close();
@@ -341,10 +341,23 @@ public class Terminal {
         String destinationFile = args[1];
 
         try {
-            Path sourcePath = Path.of(sourceFile);
-            Path destinationPath = Path.of(destinationFile);
+//            Path sourcePath = Path.of(sourceFile);
+//            Path destinationPath = Path.of(destinationFile);
+//
+//            Files.move(sourcePath, destinationPath, StandardCopyOption.REPLACE_EXISTING);
+            
+//            public void mv(String source, String destination) throws IOException {
+//                File sourceFile = new File(currentDirectory, source);
+//                File destinationFile = new File(currentDirectory, destination);
+//                Files.move(sourceFile.toPath(), destinationFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+//                System.out.println("File moved successfully");
+//            }
 
-            Files.move(sourcePath, destinationPath, StandardCopyOption.REPLACE_EXISTING);
+            Path sourceDirectory = Paths.get(sourceFile);
+            Path destinationDirectory = Paths.get(destinationFile);
+            Files.move(sourceDirectory, destinationDirectory, StandardCopyOption.REPLACE_EXISTING);
+//            Files.move(sourceFiley.toPath(), destinationFiley.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
 
             System.out.println("File moved successfully.");
         } catch (IOException e) {

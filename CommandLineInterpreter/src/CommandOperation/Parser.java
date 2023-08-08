@@ -35,7 +35,7 @@ public class Parser {
                 System.out.println("Error! ,'cd' takes one or no arguments");
             }
         } else if (command.equals("ls")) {
-            if (arg.length != 1) {
+            if (arg.length == 2|| arg.length > 3) {
                 flag = 1;
                 System.out.println("Error ! ,'ls' takes no arguments");
             } else {
@@ -50,7 +50,7 @@ public class Parser {
                 System.out.println("Error! ,cp Two arguments expected.");
             }
         } else if (command.equals("help")) {
-            if (arg.length > 1) {
+            if (arg.length == 2 || arg.length > 3) {
                 flag = 1;
                 System.out.println("no arguments should be added");
             } else
@@ -103,7 +103,7 @@ public class Parser {
             else if (arg.length == 4)
                 System.out.println("you should add 1 or 2 arguments ");
             else {
-                String[] subArray = getSubArray(arg, 1, arg.length - 1);
+                String[] subArray = getSubArray(arg, 1, 2);
                 List<String> list = t.cat(subArray);
                 output = convertListString(list);
                 printList(list);
@@ -120,15 +120,13 @@ public class Parser {
         // handle redirect directories
         int redirct_index = find(arg,">");
         int D_redirctIndex = find (arg,">>");
-        if (flag ==1 && (redirct_index== -1|| D_redirctIndex== -1)) {
+        if (flag ==1 ) {
             System.out.println();
         }
         else if (redirct_index == arg.length || D_redirctIndex == arg.length ){
             System.out.println("you should add file name. ");
         }
-        else if (arg.length-redirct_index == 2 || arg.length-D_redirctIndex == 2){
-            System.out.println("you should add one file name. ");
-        } else if (redirct_index > 0) {
+        else if (redirct_index > 0) {
             t.reidrect(output,arg[arg.length-1]);
         }
         else if (D_redirctIndex > 0) {
