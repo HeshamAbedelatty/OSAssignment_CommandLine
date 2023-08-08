@@ -203,22 +203,108 @@ public class Terminal {
                 System.err.println("Error reading the file: " + e.getMessage());
             }
             p = p.concat(text);
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(currentPath()+"/"+filename))) {
+            try {
+                // Create the directory if it doesn't exist
+                File directory = new File(currentPath());
+                if (!directory.exists()) {
+                    directory.mkdirs();
+                }
 
-                writer.write(p);
+                // Create a FileOutputStream for the specified file
+                FileOutputStream outputStream = new FileOutputStream(new File(directory, filename));
+
+                // Convert the string to bytes and write to the file
+                byte[] contentBytes = p.getBytes();
+                outputStream.write(contentBytes);
+
+                // Close the output stream
+                outputStream.close();
+
+                System.out.println("Content has been written to the file in the specified directory.");
+
             } catch (IOException e) {
-                System.err.println("Error writing to the file: " + e.getMessage());
+                e.printStackTrace();
             }
         }
         else {
-            File newDir = new File(currentPath(), filename);
-            newDir.mkdirs();
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(currentPath()+"/"+filename))) {
-                writer.write(text);
+            try {
+                // Create the directory if it doesn't exist
+                File directory = new File(currentPath());
+                if (!directory.exists()) {
+                    directory.mkdirs();
+                }
+
+                // Create a FileOutputStream for the specified file
+                FileOutputStream outputStream = new FileOutputStream(new File(directory, filename));
+
+                // Convert the string to bytes and write to the file
+                byte[] contentBytes = text.getBytes();
+                outputStream.write(contentBytes);
+
+                // Close the output stream
+                outputStream.close();
+
+                System.out.println("Content has been written to the file in the specified directory.");
+
             } catch (IOException e) {
-                System.err.println("Error writing to the file: " + e.getMessage());
+                e.printStackTrace();
             }
         }
     }
+    public void reidrect(String text,String filename) throws IOException {
+
+        File file = new File(currentPath(), filename);
+        String p = "";
+        if (file.exists() && file.isFile()) {
+            p = p.concat(text);
+            try {
+                // Create the directory if it doesn't exist
+                File directory = new File(currentPath());
+                if (!directory.exists()) {
+                    directory.mkdirs();
+                }
+
+                // Create a FileOutputStream for the specified file
+                FileOutputStream outputStream = new FileOutputStream(new File(directory, filename));
+
+                // Convert the string to bytes and write to the file
+                byte[] contentBytes = p.getBytes();
+                outputStream.write(contentBytes);
+
+                // Close the output stream
+                outputStream.close();
+
+                System.out.println("Content has been written to the file in the specified directory.");
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            try {
+                // Create the directory if it doesn't exist
+                File directory = new File(currentPath());
+                if (!directory.exists()) {
+                    directory.mkdirs();
+                }
+
+                // Create a FileOutputStream for the specified file
+                FileOutputStream outputStream = new FileOutputStream(new File(directory, filename));
+
+                // Convert the string to bytes and write to the file
+                byte[] contentBytes = text.getBytes();
+                outputStream.write(contentBytes);
+
+                // Close the output stream
+                outputStream.close();
+
+                System.out.println("Content has been written to the file in the specified directory.");
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
 }
