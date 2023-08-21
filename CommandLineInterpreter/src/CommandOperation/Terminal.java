@@ -332,36 +332,17 @@ public class Terminal {
         }
     }
     public void mv(String[] args) {
-        if (args.length != 2) {
-            System.out.println("Usage: java MVCommand <source_file> <destination_file>");
-            return;
-        }
-
-        String sourceFile = args[0];
-        String destinationFile = args[1];
+       
+        Path source = Paths.get(args[0]);
+        Path target = Paths.get(args[1]);
 
         try {
-//            Path sourcePath = Path.of(sourceFile);
-//            Path destinationPath = Path.of(destinationFile);
-//
-//            Files.move(sourcePath, destinationPath, StandardCopyOption.REPLACE_EXISTING);
-            
-//            public void mv(String source, String destination) throws IOException {
-//                File sourceFile = new File(currentDirectory, source);
-//                File destinationFile = new File(currentDirectory, destination);
-//                Files.move(sourceFile.toPath(), destinationFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-//                System.out.println("File moved successfully");
-//            }
-
-            Path sourceDirectory = Paths.get(sourceFile);
-            Path destinationDirectory = Paths.get(destinationFile);
-            Files.move(sourceDirectory, destinationDirectory, StandardCopyOption.REPLACE_EXISTING);
-//            Files.move(sourceFiley.toPath(), destinationFiley.toPath(), StandardCopyOption.REPLACE_EXISTING);
-
-
+            Files.move(source, target);
             System.out.println("File moved successfully.");
         } catch (IOException e) {
-            System.out.println("An error occurred: " + e.getMessage());
+            System.err.println("Error moving file: " + e.getMessage());
+        }
+
         }
     }
 
