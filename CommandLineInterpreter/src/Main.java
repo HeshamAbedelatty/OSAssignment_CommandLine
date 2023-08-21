@@ -10,7 +10,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
-            
+
             System.out.print(Terminal.currentPath()+" >");
             String userInput = scanner.nextLine();
 
@@ -21,8 +21,18 @@ public class Main {
                 String  [] parts = userInput.split("& " , 2);
                 String input1 = parts[0];
                 String input2 = parts[1];
-                Parser.parse(input1);
-                Parser.parse(input2);
+                if (input1.equals("exit"))
+                {break;}
+                else if (input2.equals("exit"))
+                {
+                    Parser.parse(input1);
+                    break;
+                }
+                else
+                {
+                    Parser.parse(input1);
+                    Parser.parse(input2);
+                }
             }
             else { Parser.parse(userInput); }
         }
